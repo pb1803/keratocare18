@@ -39,24 +39,38 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+        medical: {
+          blue: "hsl(var(--medical-blue))",
+          "blue-dark": "hsl(var(--medical-blue-dark))",
+          "blue-light": "hsl(var(--medical-blue-light))",
         },
+        success: {
+          green: "hsl(var(--success-green))",
+          "green-dark": "hsl(var(--success-green-dark))",
+          "green-light": "hsl(var(--success-green-light))",
+        },
+        neutral: {
+          charcoal: "hsl(var(--dark-charcoal))",
+          gray: "hsl(var(--medium-gray))",
+          "light-gray": "hsl(var(--light-gray))",
+          "lightest-gray": "hsl(var(--lightest-gray))",
+        },
+        orange: "hsl(var(--warm-orange))",
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-hero": "var(--gradient-hero)",
+        "gradient-subtle": "var(--gradient-subtle)",
+      },
+      boxShadow: {
+        sm: "var(--shadow-sm)",
+        md: "var(--shadow-md)",
+        lg: "var(--shadow-lg)",
+        glow: "var(--shadow-glow)",
       },
       borderRadius: {
         lg: "var(--radius)",
