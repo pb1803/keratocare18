@@ -1,4 +1,5 @@
 import { Phone, MessageCircle, Instagram } from "lucide-react";
+import { openWhatsApp } from "@/lib/whatsapp";
 
 const FloatingButtons = () => {
   return (
@@ -11,15 +12,13 @@ const FloatingButtons = () => {
         <Phone className="w-6 h-6 group-hover:animate-pulse" />
       </a>
 
-      <a
-        href="https://wa.me/917276861131?text=Hi,%20I'd%20like%20to%20know%20more%20about%20keratoconus%20treatment"
-        target="_blank"
-        rel="noopener noreferrer"
+      <button
+        onClick={() => openWhatsApp('generalInquiry')}
         className="w-14 h-14 rounded-full bg-secondary hover:bg-secondary/90 text-white shadow-lg hover:shadow-glow flex items-center justify-center transition-all hover:scale-110 group"
         aria-label="WhatsApp"
       >
         <MessageCircle className="w-6 h-6 group-hover:animate-pulse" />
-      </a>
+      </button>
 
       <a
         href="#"

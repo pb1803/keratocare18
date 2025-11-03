@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Eye, Search, Activity, CheckCircle2 } from "lucide-react";
+import { openWhatsApp } from "@/lib/whatsapp";
 
 const Services = () => {
   const scrollToContact = () => {
@@ -121,8 +122,11 @@ const Services = () => {
                 </div>
                 
                 <div className="flex flex-col gap-2 mt-auto">
-                  <Button variant="outline" className="w-full">Learn More</Button>
-                  <Button onClick={scrollToContact} className="w-full bg-secondary hover:bg-secondary/90">
+                  <Button variant="outline" className="w-full" onClick={scrollToContact}>Learn More</Button>
+                  <Button 
+                    onClick={() => openWhatsApp(index === 0 ? 'scheduleFitting' : index === 1 ? 'bookMapping' : 'startProgram')}
+                    className="w-full bg-secondary hover:bg-secondary/90"
+                  >
                     {index === 0 ? "Schedule Fitting" : index === 1 ? "Book Mapping" : "Start Program"}
                   </Button>
                 </div>

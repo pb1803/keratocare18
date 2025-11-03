@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Phone, Mail, MessageCircle, MapPin, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+import { openWhatsApp } from "@/lib/whatsapp";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +25,25 @@ const Contact = () => {
       toast.error("Please agree to the privacy policy");
       return;
     }
-    toast.success("Thanks! We'll respond within 24 hours");
+    
+    // Send message via WhatsApp
+    const whatsappMessage = `Hello! I'm sending you a message from the KeratoCare website.
+
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Condition: ${formData.condition || 'Not specified'}
+Message: ${formData.message || 'No additional message'}
+
+Please get back to me at your earliest convenience.
+
+Thank you!`;
+    
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappUrl = `https://wa.me/917276861131?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    
+    toast.success("Redirecting to WhatsApp - We'll respond within 24 hours");
     setFormData({
       name: "",
       email: "",
@@ -71,14 +90,11 @@ const Contact = () => {
                   <div className="flex-1">
                     <h3 className="font-bold text-lg mb-1">WhatsApp - Quick Response</h3>
                     <p className="text-sm text-muted-foreground mb-3">Typically respond in 15 minutes</p>
-                    <Button className="w-full bg-secondary hover:bg-secondary/90" asChild>
-                      <a
-                        href="https://wa.me/917276861131?text=Hi,%20I'd%20like%20to%20know%20more%20about%20keratoconus%20treatment"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Open WhatsApp
-                      </a>
+                    <Button 
+                      className="w-full bg-secondary hover:bg-secondary/90"
+                      onClick={() => openWhatsApp('generalInquiry')}
+                    >
+                      Open WhatsApp
                     </Button>
                   </div>
                 </div>

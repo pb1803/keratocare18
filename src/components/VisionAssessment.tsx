@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, ChevronLeft, ChevronRight, AlertCircle, Target, Calendar } from "lucide-react";
+import { openWhatsApp } from "@/lib/whatsapp";
 
 interface AssessmentState {
   question1: string;
@@ -187,7 +188,11 @@ const VisionAssessment = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-              <Button size="lg" onClick={scrollToContact} className="bg-secondary hover:bg-secondary/90 text-lg px-8 py-6">
+              <Button 
+                size="lg" 
+                onClick={() => openWhatsApp('consultation')} 
+                className="bg-secondary hover:bg-secondary/90 text-lg px-8 py-6"
+              >
                 Book Free Consultation
               </Button>
               <Button size="lg" variant="outline" className="text-lg px-8 py-6" asChild>

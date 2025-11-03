@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Home, ClipboardCheck, Phone, MessageCircle, Calendar } from "lucide-react";
+import { openWhatsApp } from "@/lib/whatsapp";
 
 const MobileNav = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -64,18 +65,16 @@ const MobileNav = () => {
           <span className="text-xs font-medium">Call</span>
         </a>
 
-        <a
-          href="https://wa.me/917276861131?text=Hi,%20I'd%20like%20to%20know%20more%20about%20keratoconus%20treatment"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => openWhatsApp('generalInquiry')}
           className="flex flex-col items-center justify-center space-y-1 text-muted-foreground hover:text-secondary transition-colors"
         >
           <MessageCircle className="w-5 h-5" />
           <span className="text-xs font-medium">WhatsApp</span>
-        </a>
+        </button>
 
         <button
-          onClick={() => scrollToSection("contact")}
+          onClick={() => openWhatsApp('consultation')}
           className={`flex flex-col items-center justify-center space-y-1 transition-colors ${
             activeSection === "contact" ? "bg-secondary text-white" : "bg-secondary/90 text-white"
           }`}
