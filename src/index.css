@@ -4,64 +4,73 @@
 @tailwind components;
 @tailwind utilities;
 
-/* KeratoCare Design System - Medical Professional Aesthetic */
+/* KeratoCare Design System - Clean Medical White & Mint Background */
 
 @layer base {
   :root {
     /* Base Colors */
     --background: 0 0% 100%;
     --foreground: 215 25% 27%;
-    
-    /* Medical Blue - Primary Brand Color */
-    --medical-blue: 210 71% 58%;
-    --medical-blue-dark: 210 71% 48%;
+
+    /* Brand Colors (Keep Original Green + Accents) */
+    --medical-blue: 210 31% 58%;
+    --medical-blue-dark: 210 31% 48%;
     --medical-blue-light: 210 100% 95%;
-    
-    /* Success Green - CTAs */
+
     --success-green: 145 63% 42%;
     --success-green-dark: 145 63% 35%;
     --success-green-light: 145 63% 95%;
-    
+
     /* Neutrals */
     --dark-charcoal: 215 25% 27%;
     --medium-gray: 215 14% 55%;
     --light-gray: 214 32% 91%;
     --lightest-gray: 210 40% 98%;
-    
+
     /* Accent Colors */
     --warm-orange: 38 92% 50%;
     --error-red: 0 72% 51%;
-    
+
     /* Component Tokens */
     --card: 0 0% 100%;
     --card-foreground: 215 25% 27%;
-    
+
     --primary: 210 71% 58%;
     --primary-foreground: 0 0% 100%;
-    
+
     --secondary: 145 63% 42%;
     --secondary-foreground: 0 0% 100%;
-    
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215 14% 55%;
-    
+
     --accent: 210 100% 95%;
     --accent-foreground: 215 25% 27%;
-    
+
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    
+
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 210 71% 58%;
-    
+
     --radius: 0.75rem;
-    
+
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(210 71% 58%), hsl(145 63% 42%));
-    --gradient-hero: linear-gradient(135deg, hsl(210 100% 95%), hsl(145 63% 95%));
+    --gradient-primary: linear-gradient(135deg, #4A90E2, #27AE60);
+
+    /* ✅ Updated hero gradient — elegant medical blue blend */
+    --gradient-hero: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --gradient-hero-strong: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 40% 98%));
+
+    /* Button Gradients */
+    --gradient-green-button: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
     
+    /* Premium Colors */
+    --navy-dark: #012A4A;
+    --teal-bright: #00A896;
+
     /* Shadows */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
     --shadow-md: 0 2px 12px rgba(0, 0, 0, 0.08);
@@ -82,6 +91,12 @@
   html {
     scroll-behavior: smooth;
   }
+}
+
+/* Ensure sections account for fixed navs */
+@layer utilities {
+  section { scroll-margin-top: 80px; }
+  :root { --kc-scroll-offset: 80px; }
 }
 
 @layer components {
@@ -129,40 +144,188 @@
     }
   }
 
-  /* Utility Classes */
-  .animate-slide-up {
-    animation: slideUpFadeIn 0.6s ease-out;
+  @keyframes gradient-x {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
-  .animate-fade-in {
-    animation: fadeIn 0.8s ease-out;
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+  @keyframes statHover {
+    0%, 100% { 
+      transform: scale(1);
+      box-shadow: 0 0 0 rgba(0, 168, 150, 0);
+    }
+    50% { 
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 168, 150, 0.3);
+    }
   }
 
-  .animate-shake {
-    animation: shake 0.4s ease-out;
+  @keyframes floatEye {
+    0%, 100% { 
+      transform: translateY(0px) rotate(0deg);
+    }
+    33% { 
+      transform: translateY(-8px) rotate(1deg);
+    }
+    66% { 
+      transform: translateY(4px) rotate(-1deg);
+    }
   }
 
-  .animate-glow {
-    animation: glow 2s ease-in-out infinite;
+  /* Utility Animations */
+  .animate-slide-up { animation: slideUpFadeIn 0.6s ease-out; }
+  .animate-fade-in { animation: fadeIn 0.8s ease-out; }
+  .animate-float { animation: float 3s ease-in-out infinite; }
+  .animate-shake { animation: shake 0.4s ease-out; }
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 4s ease infinite;
+  }
+  .animate-glow { animation: glow 2s ease-in-out infinite; }
+  .animate-scale-in { animation: scaleIn 0.4s ease-out; }
+  .animate-fade-in-up { animation: fadeInUp 0.8s ease-out; }
+  .animate-stat-hover { animation: statHover 0.4s ease-out; }
+  .animate-float-eye { animation: floatEye 6s ease-in-out infinite; }
+
+  /* ✅ Updated hero background with elegant medical blue */
+  .bg-gradient-hero-new {
+    background: var(--gradient-hero-strong);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: hsl(210 15% 20%); /* darker readable text */
   }
 
-  .animate-scale-in {
-    animation: scaleIn 0.4s ease-out;
+  /* Premium Button Styles */
+  .btn-premium-green {
+    background: var(--gradient-green-button);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 176, 155, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Gradient Text */
+  .btn-premium-green:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 176, 155, 0.35), 0 0 20px rgba(150, 201, 61, 0.2);
+  }
+
+  .btn-premium-white {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--navy-dark);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-premium-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 1);
+  }
+
+  /* Text Shadow for Premium Feel */
+  .text-shadow-soft {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow-premium {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Black text stroke for "Clearly Again" */
+  .text-stroke-black {
+    -webkit-text-stroke: 2px #000000;
+    text-stroke: 2px #000000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Card Depth */
+  .card-depth {
+    box-shadow: 
+      0 4px 6px rgba(0, 0, 0, 0.05),
+      0 1px 3px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Stats Hover Effect */
+  .stat-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+
+  .stat-hover:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 15px rgba(0, 168, 150, 0.3));
+  }
+
+  /* Stat Card */
+  .stat-card {
+    min-height: 84px;
+    padding: 1.2rem;
+    border-radius: 1rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.5));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+  }
+
+  .stat-card:active { transform: scale(0.99); }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-slide-up,
+    .animate-fade-in,
+    .animate-float,
+    .animate-scale-in,
+    .animate-glow { animation: none !important; transition: none !important; }
+  }
+
+  /* Buttons (unchanged, still green) */
+  .btn-teal {
+    background-color: #00BFA6;
+    color: white;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+
+  .btn-teal:hover {
+    box-shadow: 0 10px 30px rgba(0,191,166,0.18);
+  }
+
+  /* Image zoom animation */
+  @keyframes zoomIn {
+    from { transform: scale(0.98); opacity: 0.9; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .image-zoom { animation: zoomIn 0.8s ease-out both; }
+
+  /* Gradient Text (Keep as is) */
   .gradient-text {
-    background: var(--gradient-primary);
+    background: linear-gradient(90deg, #4A90E2 0%, #00BFA6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Glassmorphism Effect */
+  /* Glassmorphism */
   .glass {
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
@@ -177,5 +340,10 @@
   .card-hover:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
+  }
+
+  /* 3D Perspective for Card Stack */
+  .perspective-1000 {
+    perspective: 1000px;
   }
 }

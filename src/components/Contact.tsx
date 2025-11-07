@@ -5,9 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Phone, Mail, MessageCircle, MapPin, CheckCircle2 } from "lucide-react";
+import { Phone, MessageCircle, MapPin, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { openWhatsApp } from "@/lib/whatsapp";
+import { 
+  storeMessageSilently,
+  generateWhatsAppMessage,
+  ContactFormData 
+} from "@/lib/admin-storage";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -19,39 +24,74 @@ const Contact = () => {
     agreed: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.agreed) {
       toast.error("Please agree to the privacy policy");
       return;
     }
     
-    // Send message via WhatsApp
-    const whatsappMessage = `Hello! I'm sending you a message from the KeratoCare website.
+    // Prepare data for storage
+    const contactData: ContactFormData = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      condition: formData.condition || "Not specified",
+      message: formData.message || "No additional message",
+    };
 
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Condition: ${formData.condition || 'Not specified'}
-Message: ${formData.message || 'No additional message'}
+    try {
+      // 🔒 SILENT ADMIN STORAGE (user doesn't see this)
+      const storedMessage = storeMessageSilently(contactData);
+      
+      // 🎯 USER EXPERIENCE: Show success and redirect to WhatsApp
+      toast.success("✅ Message received!", {
+        description: "Redirecting to WhatsApp for instant support...",
+        duration: 3000
+      });
+      
+      // Clear form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        condition: "",
+        message: "",
+        agreed: false,
+      });
+      
+      // 💬 Redirect to WhatsApp after 2 seconds
+      setTimeout(() => {
+        const whatsappMessage = generateWhatsAppMessage(contactData);
+        const encodedMessage = encodeURIComponent(whatsappMessage);
+        const whatsappUrl = `https://wa.me/917276861131?text=${encodedMessage}`;
+        
+        // Open WhatsApp in new window
+        window.open(whatsappUrl, '_blank');
+        
+        toast.info("💚 WhatsApp opened! Send your message there.", {
+          duration: 5000
+        });
+      }, 2000);
+      
+    } catch (error) {
+      console.error("Error handling form submission:", error);
+      
+      // Even if storage fails, still redirect to WhatsApp
+      toast.success("✅ Message received! Redirecting to WhatsApp...");
+      
+      setTimeout(() => {
+        const whatsappMessage = generateWhatsAppMessage(contactData);
+        const encodedMessage = encodeURIComponent(whatsappMessage);
+        const whatsappUrl = `https://wa.me/917276861131?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+      }, 1500);
+    }
+  };
 
-Please get back to me at your earliest convenience.
-
-Thank you!`;
-    
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    const whatsappUrl = `https://wa.me/917276861131?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    
-    toast.success("Redirecting to WhatsApp - We'll respond within 24 hours");
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      condition: "",
-      message: "",
-      agreed: false,
-    });
+  const handleExportAll = () => {
+    // This function is for admin use only - not accessible to regular users
+    console.log("Admin export function called");
   };
 
   return (
@@ -100,22 +140,6 @@ Thank you!`;
                 </div>
               </Card>
 
-              <Card className="p-6 card-hover">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-lg mb-1">Email - Secure & HIPAA Compliant</h3>
-                    <p className="text-primary font-semibold mb-2">hello@keratocare.com</p>
-                    <p className="text-sm text-muted-foreground mb-3">Detailed inquiries welcome</p>
-                    <Button variant="outline" className="w-full" asChild>
-                      <a href="mailto:hello@keratocare.com">Send Email</a>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-
               <Card className="p-6">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
@@ -125,18 +149,62 @@ Thank you!`;
                     <h3 className="font-bold text-lg mb-1">Location</h3>
                     <p className="text-foreground mb-1">KeratoCare Consulting</p>
                     <p className="text-muted-foreground mb-2">Pune, Maharashtra</p>
-                    <p className="text-sm text-muted-foreground">Service Area: Multiple hospitals across Pune</p>
+                    <p className="text-sm text-muted-foreground">Specialized keratoconus care and consultation</p>
                     <p className="text-sm font-semibold text-secondary mt-2">
                       Monday-Sunday, 9 AM - 6 PM
                     </p>
                   </div>
                 </div>
               </Card>
+
+              {/* Google Maps */}
+              <Card className="p-6">
+                <h3 className="font-bold text-lg mb-4 flex items-center">
+                  <MapPin className="w-5 h-5 text-primary mr-2" />
+                  Find Us on Map
+                </h3>
+                <div className="relative w-full h-64 rounded-lg overflow-hidden">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d242117.78285788757!2d73.72262025!3d18.52460675!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2e67461101%3A0x828d43bf9d9ee343!2sPune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1699385760000!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="KeratoCare Consulting Location - Pune, Maharashtra"
+                    className="rounded-lg"
+                  ></iframe>
+                </div>
+                <div className="mt-3 text-center">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    asChild
+                    className="text-xs"
+                  >
+                    <a
+                      href="https://maps.google.com/?q=Pune,Maharashtra"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Open in Google Maps
+                    </a>
+                  </Button>
+                </div>
+              </Card>
             </div>
 
             {/* Contact Form */}
             <Card className="p-8">
-              <h3 className="text-2xl font-bold mb-6">Send Us a Message</h3>
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold">Send Us a Message</h3>
+                <div className="flex items-center space-x-2 text-sm">
+                  <MessageCircle className="w-4 h-4 text-green-500" />
+                  <span className="text-green-600 font-medium">WhatsApp Ready</span>
+                </div>
+              </div>
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <Label htmlFor="name">Name *</Label>
@@ -215,7 +283,7 @@ Thank you!`;
                 <div className="flex gap-3">
                   <Button type="submit" className="flex-1 bg-secondary hover:bg-secondary/90">
                     <CheckCircle2 className="w-4 h-4 mr-2" />
-                    Send Message
+                    Send via WhatsApp
                   </Button>
                   <Button
                     type="button"
@@ -233,6 +301,10 @@ Thank you!`;
                   >
                     Clear Form
                   </Button>
+                </div>
+
+                <div className="text-xs text-muted-foreground text-center pt-2">
+                  � You'll be redirected to WhatsApp to complete your message.
                 </div>
               </form>
             </Card>

@@ -1,0 +1,14 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Eye outline representing vision care -->
+  <ellipse cx="24" cy="24" rx="20" ry="13" stroke="#0D9488" stroke-width="3" fill="none"/>
+  
+  <!-- Eye pupil -->
+  <circle cx="24" cy="24" r="8" fill="#0D9488"/>
+  <circle cx="24" cy="24" r="4" fill="white"/>
+  
+  <!-- Lens reflection highlight -->
+  <circle cx="21" cy="21" r="2" fill="rgba(255,255,255,0.8)"/>
+  
+  <!-- Contact lens ring (specialty lens indication) -->
+  <circle cx="24" cy="24" r="11" stroke="#059669" stroke-width="1" fill="none" opacity="0.6"/>
+</svg>

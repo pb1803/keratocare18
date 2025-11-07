@@ -31,10 +31,9 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center space-x-2 cursor-pointer" onClick={() => scrollToSection("hero")}>
-            <div className="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center">
-              <span className="text-white font-bold text-lg">KC</span>
-            </div>
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => scrollToSection("hero")}>
+            {/* Logo image - using logo.svg for better quality */}
+            <img src="/logo.svg" alt="KeratoCare logo" className="w-12 h-12 object-contain rounded" />
             <span className="text-2xl font-bold text-foreground">KeratoCare</span>
           </div>
 

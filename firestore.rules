@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Collection for contact messages
+    match /contact_messages/{docId} {
+      // Allow anyone to create a message (so the public site can submit).
+      // In production you may want to add rate-limiting, CAPTCHA or server-side validation.
+      allow create: if true;
+
+      // Only allow reads for authenticated users with an 'admin' custom claim.
+      // Set this on the server using the Admin SDK: `admin.auth().setCustomUserClaims(uid, {admin: true})`
+      allow read: if request.auth != null && request.auth.token.admin == true;
+
+      // Deny update/delete from clients.
+      allow update, delete: if false;
+    }
+  }
+}

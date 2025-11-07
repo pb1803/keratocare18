@@ -126,20 +126,7 @@ const About = () => {
             </div>
           </div>
 
-          {/* Hospital Affiliations */}
-          <Card className="p-8 text-center">
-            <h3 className="text-xl font-bold mb-6">Hospital Affiliations</h3>
-            <p className="text-muted-foreground mb-6">
-              Serving patients across multiple hospitals in Pune
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 opacity-60">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="h-20 bg-neutral-light-gray rounded-lg flex items-center justify-center">
-                  <span className="text-sm font-semibold text-muted-foreground">Hospital {i + 1}</span>
-                </div>
-              ))}
-            </div>
-          </Card>
+
         </div>
       </div>
     </section>

@@ -17,19 +17,11 @@ const Services = () => {
       badge: "MOST POPULAR",
       badgeColor: "bg-secondary text-white",
       title: "Specialty Contact Lenses",
-      description: "Transform your vision with custom engineered contact lenses designed specifically for keratoconus",
-      features: [
-        "Scleral Lenses (Large diameter, vault cornea)",
-        "Mini Scleral Lenses (Balanced comfort & FOV)",
-        "Hybrid Lenses (Rigid center + soft skirt)",
-        "Custom RGP Designs (Precision fitting)",
-        "Piggyback Systems (Soft lens under rigid)",
-      ],
-      benefits: [
-        "98% success rate",
-        "Results visible within 24-48h",
-        "Reversible & adjustable",
-        "Long-term vision stability",
+      description: "Custom engineered contact lenses designed specifically for keratoconus",
+      keyPoints: [
+        "98% success rate with custom fitting",
+        "Results visible within 24-48 hours",
+        "Reversible & adjustable design"
       ],
     },
     {
@@ -37,19 +29,11 @@ const Services = () => {
       badge: "AI-POWERED",
       badgeColor: "bg-primary text-white",
       title: "Advanced Corneal Mapping",
-      description: "Precision mapping using latest technology to understand your exact corneal shape & progression",
-      features: [
-        "Pentacam HR Imaging (High-resolution 3D mapping)",
-        "Corneal Topography (Surface contour analysis)",
-        "AI 3D Modeling (Machine learning predictions)",
-        "Progression Monitoring (Track changes)",
-        "Custom Lens Design (AI-optimized parameters)",
-      ],
-      benefits: [
-        "Identifies lens fit before wear",
-        "Monitors disease progression",
-        "Prevents complications",
-        "Optimizes lens design",
+      description: "Precision 3D mapping using AI technology to understand your corneal shape",
+      keyPoints: [
+        "High-resolution 3D corneal imaging",
+        "AI-optimized lens parameter design",
+        "Real-time progression monitoring"
       ],
     },
     {
@@ -58,76 +42,66 @@ const Services = () => {
       badgeColor: "bg-orange text-white",
       title: "Vision Therapy Programs",
       description: "Comprehensive training to maximize vision improvement & adaptation",
-      features: [
-        "Visual Training Exercises (Enhance processing)",
-        "Binocular Therapy (Both eyes coordination)",
-        "Accommodation Training (Focus flexibility)",
-        "Eye Movement Training (Saccade & pursuit)",
-        "Lifestyle Optimization (Screen time management)",
-      ],
-      benefits: [
-        "Faster vision adaptation",
-        "Reduced glare & halos",
-        "Improved night vision",
-        "Enhanced daily performance",
+      keyPoints: [
+        "Faster vision adaptation protocols",
+        "Reduced glare & nighttime halos",
+        "Enhanced daily performance training"
       ],
     },
   ];
 
   return (
-    <section id="services" className="py-20 bg-gradient-subtle">
+    <section id="services" className="py-20 bg-gradient-subtle overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">Revolutionary Treatment Options</h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
             Advanced solutions tailored to your specific vision needs
           </p>
 
-          {/* Service Cards */}
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          {/* All Cards Side-by-Side */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16">
             {services.map((service, index) => (
-              <Card key={index} className="p-8 card-hover animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
-                <div className="flex items-start justify-between mb-6">
-                  <service.icon className="w-12 h-12 text-primary" />
-                  <span className={`text-xs font-bold px-3 py-1 rounded-full ${service.badgeColor}`}>
-                    {service.badge}
-                  </span>
+              <Card 
+                key={index}
+                className="p-6 card-hover bg-white/98 backdrop-blur-sm border-2 shadow-lg rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] h-full flex flex-col"
+              >
+                <div className="text-center mb-4">
+                  {/* Icon & Badge */}
+                  <div className="relative mb-3 inline-block">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center mx-auto shadow-md">
+                      <service.icon className="w-8 h-8 text-primary" />
+                    </div>
+                    <span className={`absolute -top-1 -right-1 text-xs font-bold px-2 py-1 rounded-full ${service.badgeColor} shadow-sm`}>
+                      {service.badge}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-gray-900">{service.title}</h3>
+                  <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{service.description}</p>
                 </div>
                 
-                <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-                <p className="text-muted-foreground mb-6 text-sm">{service.description}</p>
-                
-                <div className="mb-6">
-                  <h4 className="font-semibold text-sm mb-3">Featured Options:</h4>
+                {/* Key Points */}
+                <div className="mb-4 flex-grow">
                   <ul className="space-y-2">
-                    {service.features.map((feature, i) => (
-                      <li key={i} className="text-sm text-muted-foreground flex items-start">
+                    {service.keyPoints.map((point, i) => (
+                      <li key={i} className="flex items-start text-xs">
                         <CheckCircle2 className="w-4 h-4 text-secondary mr-2 flex-shrink-0 mt-0.5" />
-                        <span>{feature}</span>
+                        <span className="text-gray-700 leading-relaxed">{point}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
                 
-                <div className="mb-6">
-                  <h4 className="font-semibold text-sm mb-3">Benefits:</h4>
-                  <ul className="space-y-1">
-                    {service.benefits.map((benefit, i) => (
-                      <li key={i} className="text-sm flex items-center">
-                        <span className="w-1.5 h-1.5 rounded-full bg-secondary mr-2"></span>
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
+                {/* Action Buttons */}
                 <div className="flex flex-col gap-2 mt-auto">
-                  <Button variant="outline" className="w-full" onClick={scrollToContact}>Learn More</Button>
                   <Button 
                     onClick={() => openWhatsApp(index === 0 ? 'scheduleFitting' : index === 1 ? 'bookMapping' : 'startProgram')}
-                    className="w-full bg-secondary hover:bg-secondary/90"
+                    className="bg-secondary hover:bg-secondary/90 text-white px-4 py-2 text-sm font-semibold w-full"
                   >
                     {index === 0 ? "Schedule Fitting" : index === 1 ? "Book Mapping" : "Start Program"}
+                  </Button>
+                  <Button variant="outline" onClick={scrollToContact} className="px-4 py-2 text-sm w-full">
+                    Learn More
                   </Button>
                 </div>
               </Card>
